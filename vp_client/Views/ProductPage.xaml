@@ -24,7 +24,7 @@
                            HeightRequest="60"
                            Placeholder="Поиск товара"
                            BackgroundColor="White"
-                           SearchCommand="{Binding TextChanged}"
+                           SearchCommand="{Binding TextChanged}"                   
                            SearchCommandParameter="{Binding Source={x:Reference tb_search}, Path=Text}"/>
                 <Button Grid.Column="1" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" HorizontalOptions="End"/>
             </Grid>
@@ -50,9 +50,9 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
-                                <Label Text="{Binding NameProduct}" FontSize="16" TextColor="#006064" VerticalOptions="Center" Grid.Row="0"/>
-                                <Label Text="{Binding Cost, StringFormat='{0} руб.'}" FontSize="16" TextColor="#006064" VerticalOptions="Center" Grid.Row="1"/>
-                                <Label Text="{Binding Manufacturer, StringFormat='Производитель: {0}'}" Grid.Row="2"/>
+                                <Label Text="{Binding NameProduct}" FontSize="19" TextColor="#006064" VerticalOptions="Center" Grid.Row="0"/>
+                                <Label Text="{Binding Cost, StringFormat='{0} руб.'}" FontSize="18" TextColor="#006064" VerticalOptions="Center" Grid.Row="1"/>
+                                <Label Text="{Binding Manufacturer, StringFormat='Производитель: {0}'}" FontSize="15" Grid.Row="2"/>
                                 <StackLayout Grid.Row="3" Margin="0,0,10,0"
                                     HeightRequest="15"
                                     BackgroundColor="#FFE7E8E9"
