@@ -42,17 +42,16 @@ namespace vp_client.ViewModels
         {
             if (obj != null)
             {         
-                /*var p = obj as Product;
-                using StringContent jsonContent = new(
-                    JsonSerializer.Serialize(new
+                var p = obj as Product;
+                using StringContent jsonContent = new( 
+                    JsonSerializer.Serialize(new ViewDTO
                     {
                         Date = DateOnly.FromDateTime(DateTime.Now),
                         Time = TimeOnly.FromDateTime(DateTime.Now),
-                        ProductId = p.Id
+                        ProductId = Convert.ToInt32(p.Id)
                     }),
                     Encoding.UTF8, "application/json");
-                await httpClient.PostAsJsonAsync("http://10.0.2.2:5125/api/View",jsonContent);*/
-
+               await httpClient.PostAsync("http://10.0.2.2:5125/api/View", jsonContent);
                var newPage = new ProductInfo(obj as Product);
                await Navigation.PushAsync(newPage);
             }
