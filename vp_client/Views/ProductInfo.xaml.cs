@@ -1,0 +1,12 @@
+using vp_client.Models;
+using vp_client.ViewModels;
+namespace vp_client.Views;
+
+public partial class ProductInfo : ContentPage
+{
+	public ProductInfo(Product product)
+	{
+		InitializeComponent();
+		BindingContext = new InfoViewModel(product);
+	}
+}

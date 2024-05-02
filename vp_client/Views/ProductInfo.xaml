@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="vp_client.Views.ProductInfo"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="{Binding Product.NameProduct}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:ByteArrayToImageSourceConverter x:Key="ByteToImage"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout>
+        <Grid Margin="25,10,25,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Frame Grid.Column="0" HasShadow="False" CornerRadius="15" WidthRequest="400" HeightRequest="400" HorizontalOptions="Start" VerticalOptions="Center">
+                    <Image Grid.Column="0" HeightRequest="400" WidthRequest="400" Source="{Binding Product.Photo, Mode=OneWay, Converter={StaticResource ByteToImage}}"/>
+                </Frame>
+                <StackLayout VerticalOptions="Center" Spacing="12" Grid.Column="1">
+                    <Label Text="{Binding Product.Category}"/>
+                    <Label Text="{Binding Product.Manufacturer}"/>
+                    <Label Text="{Binding Product.Cost}"/>
+                </StackLayout>
+            </Grid>
+        </Grid>
+    </StackLayout>
+</ContentPage>

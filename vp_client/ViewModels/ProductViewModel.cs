@@ -6,8 +6,10 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using vp_client.Models;
+using vp_client.Views;
 
 namespace vp_client.ViewModels
 {
@@ -21,6 +23,7 @@ namespace vp_client.ViewModels
         public ObservableCollection<Product> product;//??
 
         private Command<object> textChanged;
+        private Command<object> tapCommand;
 
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
@@ -30,8 +33,29 @@ namespace vp_client.ViewModels
         {
             navigation = _navigation;
             textChanged = new Command<object>(OnChanged);
+            tapCommand = new Command<object>(toInfoPage);
             productFromHttp = httpClient.GetFromJsonAsync<ObservableCollection<Product>>("http://10.0.2.2:5125/api/Product").Result;
             Products = new ObservableCollection<Product>(productFromHttp);
+        }
+
+        private async void toInfoPage(object obj)//На страницу подробной информации о товаре
+        {
+            if (obj != null)
+            {         
+                /*var p = obj as Product;
+                using StringContent jsonContent = new(
+                    JsonSerializer.Serialize(new
+                    {
+                        Date = DateOnly.FromDateTime(DateTime.Now),
+                        Time = TimeOnly.FromDateTime(DateTime.Now),
+                        ProductId = p.Id
+                    }),
+                    Encoding.UTF8, "application/json");
+                await httpClient.PostAsJsonAsync("http://10.0.2.2:5125/api/View",jsonContent);*/
+
+               var newPage = new ProductInfo(obj as Product);
+               await Navigation.PushAsync(newPage);
+            }
         }
 
         private void OnChanged(object obj)
@@ -74,10 +98,21 @@ namespace vp_client.ViewModels
             }
         }
 
+        public INavigation Navigation
+        {
+            get { return navigation; }
+            set { navigation = value; }
+        }
+
         public Command<object> TextChanged
         {
             get { return textChanged; }
             set { textChanged = value; }
+        }
+        public Command<object> TapCommand
+        {
+            get { return tapCommand; }
+            set { tapCommand = value; }
         }
 
         #endregion

@@ -63,6 +63,9 @@
                                 </StackLayout>
                             </Grid>
                         </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Path=BindingContext.TapCommand, Source={x:Reference clv_products}}" CommandParameter="{Binding}"/>
+                        </Frame.GestureRecognizers>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
