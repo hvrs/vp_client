@@ -24,6 +24,7 @@ namespace vp_client.ViewModels
 
         private Command<object> textChanged;
         private Command<object> tapCommand;
+        private Command<object> addToBusketCommand;
 
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
@@ -34,8 +35,23 @@ namespace vp_client.ViewModels
             navigation = _navigation;
             textChanged = new Command<object>(OnChanged);
             tapCommand = new Command<object>(toInfoPage);
+            addToBusketCommand = new Command<object>(addProductToBusket);
             productFromHttp = httpClient.GetFromJsonAsync<ObservableCollection<Product>>("http://10.0.2.2:5125/api/Product").Result;
             Products = new ObservableCollection<Product>(productFromHttp);
+        }
+        private async void addProductToBusket(object obj)//Добавление товара в корзину на сервере
+        {
+            if (obj != null)
+            {
+                var p = obj as Product;
+                using StringContent Content = new(
+                    JsonSerializer.Serialize(new ProductToB
+                    {
+                        ProductId = Convert.ToInt32(p.Id)
+                    }),
+                    Encoding.UTF8, "application/json");
+                await httpClient.PutAsync("http://10.0.2.2:5125/api/Busket",Content);
+            }
         }
 
         private async void toInfoPage(object obj)//На страницу подробной информации о товаре
@@ -101,6 +117,11 @@ namespace vp_client.ViewModels
         {
             get { return navigation; }
             set { navigation = value; }
+        }
+        public Command<object> AddToBusketCommand
+        {
+            get { return addToBusketCommand; }
+            set {  addToBusketCommand = value; }
         }
 
         public Command<object> TextChanged

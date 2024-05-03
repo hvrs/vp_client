@@ -37,7 +37,8 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Frame Grid.Column="0" HasShadow="False" CornerRadius="15" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center">
                                 <Image Grid.Column="0" HeightRequest="200" WidthRequest="200" Margin="0,0,0,0" Source="{Binding Photo, Mode=OneWay, Converter={StaticResource ByteToImage}}"/>
@@ -53,6 +54,7 @@
                                 <Label Text="{Binding NameProduct}" FontSize="19" TextColor="#006064" VerticalOptions="Center" Grid.Row="0"/>
                                 <Label Text="{Binding Cost, StringFormat='{0} руб.'}" FontSize="18" TextColor="#006064" VerticalOptions="Center" Grid.Row="1"/>
                                 <Label Text="{Binding Manufacturer, StringFormat='Производитель: {0}'}" FontSize="15" Grid.Row="2"/>
+                                
                                 <StackLayout Grid.Row="3" Margin="0,0,10,0"
                                     HeightRequest="15"
                                     BackgroundColor="#FFE7E8E9"
@@ -61,6 +63,10 @@
                                     <Label Text="{Binding Category}" LineBreakMode="NoWrap" Margin="4,0,4,2"
                                         HorizontalOptions="Center" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
                                 </StackLayout>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <Button Text="Добавить в корзину" HeightRequest="50" WidthRequest="170" VerticalOptions="End" HorizontalOptions="End" Margin="0,0,10,10"
+                                        Command="{Binding Path=BindingContext.AddToBusketCommand, Source={x:Reference clv_products}}" CommandParameter="{Binding}"/>
                             </Grid>
                         </Grid>
                         <Frame.GestureRecognizers>

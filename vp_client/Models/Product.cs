@@ -18,4 +18,8 @@ namespace vp_client.Models
         public double Cost { get; set; }
 
     }
+    public class ProductToB
+    {
+        public int ProductId { get; set; }
+    }
 }
