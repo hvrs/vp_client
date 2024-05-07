@@ -22,4 +22,10 @@ namespace vp_client.Models
     {
         public int ProductId { get; set; }
     }
+
+    public class DTOProductAndQuantity//Объект продукта в корзине
+    {
+        public Product product { get; set;}
+        public int quantityInBusket { get; set; }
+    }
 }

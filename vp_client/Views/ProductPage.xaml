@@ -26,7 +26,7 @@
                            BackgroundColor="White"
                            SearchCommand="{Binding TextChanged}"                   
                            SearchCommandParameter="{Binding Source={x:Reference tb_search}, Path=Text}"/>
-                <Button Grid.Column="1" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Button Grid.Column="1" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" HorizontalOptions="End" Command="{Binding Path=ToBusket}"/>
             </Grid>
         </Frame>
 

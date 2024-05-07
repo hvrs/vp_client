@@ -9,4 +9,10 @@ public partial class ProductInfo : ContentPage
 		InitializeComponent();
 		BindingContext = new InfoViewModel(product);
 	}
+
+    private void btn_back_Clicked(object sender, EventArgs e)
+    {
+		var newp = new ProductPage();
+		Navigation.PushAsync(newp);
+    }
 }

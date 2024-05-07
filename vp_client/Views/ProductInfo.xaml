@@ -3,13 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="vp_client.Views.ProductInfo"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             Title="{Binding Product.NameProduct}">
+             Title=""
+             Shell.NavBarIsVisible="False">
     <ContentPage.Resources>
         <ResourceDictionary>
             <toolkit:ByteArrayToImageSourceConverter x:Key="ByteToImage"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <StackLayout>
+        <ImageButton x:Name="btn_back" Margin="25,10,0,0" HorizontalOptions="Start" WidthRequest="40" HeightRequest="40" Source="btn_back" Clicked="btn_back_Clicked"/>
         <Grid Margin="25,10,25,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="4*"/>
@@ -17,19 +19,30 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+
                 <Frame Grid.Column="0" HasShadow="False" CornerRadius="15" WidthRequest="400" HeightRequest="400" HorizontalOptions="Start" VerticalOptions="Center">
                     <Image Grid.Column="0" HeightRequest="400" WidthRequest="400" Source="{Binding Product.Photo, Mode=OneWay, Converter={StaticResource ByteToImage}}"/>
                 </Frame>
                 <StackLayout VerticalOptions="Center" Spacing="12" Grid.Column="1">
-                    <Label Text="{Binding Product.Category}"/>
-                    <Label Text="{Binding Product.Manufacturer}"/>
-                    <Label Text="{Binding Product.Cost}"/>
+                    <Label Text="{Binding Product.NameProduct}" FontSize="25" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Product.Category}" FontSize="19" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Product.Manufacturer}" FontSize="19"/>
+                    <Label Text="{Binding Product.Cost, StringFormat='{0} руб.'}" FontSize="20"/>
+                    <Label Text="{Binding Product.Nicotine, StringFormat='Содержание никотна: {0}'}" FontSize="18"/>
+                    <Label Text="{Binding Product.Strength, StringFormat='Крепость продукции: {0}'}" FontSize="18"/>
                 </StackLayout>
             </Grid>
-            <Button Grid.Row="1" Text="Добавить в корзину" Command="{Binding Path=AddToBusketCommand}"/>
+            <Grid Grid.Row="1" Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="1" Text="Добавить в корзину" Margin="0,0,0,0" Command="{Binding Path=AddToBusketCommand}"/>
+            </Grid>
         </Grid>
     </StackLayout>
 </ContentPage>

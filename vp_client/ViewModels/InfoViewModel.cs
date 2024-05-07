@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using vp_client.Models;
+using vp_client.Views;
 
 namespace vp_client.ViewModels
 {
@@ -20,6 +21,7 @@ namespace vp_client.ViewModels
 
         private Command<object> addToBusketCommand;
 
+
         //private INavigation navigation;
         #endregion
         #region Constructor
@@ -27,6 +29,7 @@ namespace vp_client.ViewModels
         {
             Product = product;
             addToBusketCommand = new Command<object>(addProductToBusket);
+            //backCommand = new Command<object>(toMainPage);
         }
 
         private async void addProductToBusket(object obj)//Добавление товара в корзину на сервере
@@ -51,7 +54,7 @@ namespace vp_client.ViewModels
             {
                  _product = value;  
             }
-        }
+        }   
 
         public Command<object> AddToBusketCommand
         {

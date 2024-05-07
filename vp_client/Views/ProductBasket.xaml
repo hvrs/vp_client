@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:dataModel="clr-namespace:vp_client.Models"
+             x:Class="vp_client.Views.ProductBasket"
+             Shell.NavBarIsVisible="False"
+             Title="">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:ByteArrayToImageSourceConverter x:Key="ByteToImage"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <Frame CornerRadius="0">
+            <ImageButton x:Name="btn_back" HorizontalOptions="Start" WidthRequest="40" HeightRequest="40" Source="btn_back" Clicked="btn_back_Clicked"/>
+        </Frame>
+        
+
+        <CollectionView ItemsSource="{Binding ProductsInBasket}" VerticalOptions="FillAndExpand" x:Name="clv_basket">
+            <CollectionView.ItemTemplate>
+                <DataTemplate  x:DataType="dataModel:DTOProductAndQuantity">
+                    <Frame Padding="2" Margin="25,10,25,0" HasShadow="False" BorderColor="LightGray" CornerRadius="15">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Frame Grid.Column="0" HasShadow="False" CornerRadius="15" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center">
+                                <Image Grid.Column="0" HeightRequest="200" WidthRequest="200" Margin="0,0,0,0" Source="{Binding product.Photo, Mode=OneWay, Converter={StaticResource ByteToImage}}"/>
+                            </Frame>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding product.NameProduct}" FontSize="19" TextColor="#006064" VerticalOptions="Center" Grid.Row="0"/>
+                                <Label Text="{Binding product.Category}" FontSize="18" TextColor="#006064" VerticalOptions="Center" Grid.Row="1"/>
+                                <Label Text="{Binding product.Cost, StringFormat='Стоимость за штуку: {0} руб.'}" FontSize="18" TextColor="#006064" VerticalOptions="Center" Grid.Row="2"/>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <StackLayout VerticalOptions="End">
+                                    <Label Text="{Binding quantityInBusket}" FontSize="17" HorizontalOptions="Center" TextColor="BlueViolet"/>
+                                    <Stepper Maximum="10"  HorizontalOptions="Center" Increment="1" Value="{Binding quantityInBusket}"/>
+                                </StackLayout>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Frame CornerRadius="2">
+            <StackLayout>
+                <Label Text="{Binding Sum, StringFormat='Сумма покупки: {0} руб.'}" HorizontalOptions="Center" FontSize="20" TextColor="Black"/>
+                <Button Text="Перейти к оплате"/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</ContentPage>
