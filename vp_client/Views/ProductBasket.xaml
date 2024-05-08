@@ -47,6 +47,8 @@
                                     <Label Text="{Binding quantityInBusket}" FontSize="17" HorizontalOptions="Center" TextColor="BlueViolet"/>
                                     <Stepper Maximum="10"  HorizontalOptions="Center" Increment="1" Value="{Binding quantityInBusket}"/>
                                 </StackLayout>
+                                <ImageButton Source="del_button" VerticalOptions="Start" HorizontalOptions="End" WidthRequest="40" HeightRequest="40" Margin="0,10,10,0"
+                                             Command="{Binding Path=BindingContext.DeleteProductCommand, Source={x:Reference clv_basket}}" CommandParameter="{Binding}"/>
                             </Grid>
                         </Grid>
                     </Frame>

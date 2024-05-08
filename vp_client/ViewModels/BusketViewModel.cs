@@ -1,8 +1,12 @@
-﻿using System;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -20,7 +24,7 @@ namespace vp_client.ViewModels
         HttpClient httpClient = new HttpClient();
 
         private Command<object> changedQuantity;
-
+        private Command<object> deleteProductCommand;
 
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
@@ -29,7 +33,7 @@ namespace vp_client.ViewModels
         public BusketViewModel()
         {
             productsFromHttp = httpClient.GetFromJsonAsync<ObservableCollection<DTOProductAndQuantity>>("http://10.0.2.2:5125/api/Busket").Result;
-
+            deleteProductCommand = new Command<object>(DeleteProduct);
 
 
             ProductsInBasket = new ObservableCollection<DTOProductAndQuantity>(productsFromHttp);
@@ -37,6 +41,15 @@ namespace vp_client.ViewModels
                 Sum += i.product.Cost * i.quantityInBusket;
 
 
+        }
+        
+        private async void DeleteProduct(object obj)
+        {            
+            Sum -= (obj as DTOProductAndQuantity).product.Cost * (obj as DTOProductAndQuantity).quantityInBusket;
+            ProductsInBasket.Remove(obj as  DTOProductAndQuantity);
+            await httpClient.DeleteAsync($"http://10.0.2.2:5125/api/Busket/{(obj as DTOProductAndQuantity).product.Id}");
+
+            //NotifyPropertyChanged();
         }
         #endregion
 
@@ -53,13 +66,18 @@ namespace vp_client.ViewModels
                 }
             }
         }
+        public Command<object> DeleteProductCommand
+        {
+            get { return deleteProductCommand; }
+            set { deleteProductCommand = value; }
+        }
 
         public Command<object> ChangedQuantity
         {
             get { return changedQuantity;}
             set { changedQuantity = value;}
         }
-
+       
         public double Sum
         {
             get { return sum; }
