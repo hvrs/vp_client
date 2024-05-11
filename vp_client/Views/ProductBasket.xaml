@@ -58,7 +58,7 @@
         <Frame CornerRadius="2">
             <StackLayout>
                 <Label Text="{Binding Sum, StringFormat='Сумма покупки: {0} руб.'}" HorizontalOptions="Center" FontSize="20" TextColor="Black"/>
-                <Button Text="Перейти к оплате"/>
+                <Button Text="Перейти к оплате" Command="{Binding Path=MakePurchaseCommand}"/>
             </StackLayout>
         </Frame>
     </StackLayout>
