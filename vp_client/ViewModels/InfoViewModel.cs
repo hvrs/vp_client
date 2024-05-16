@@ -12,22 +12,19 @@ using vp_client.Views;
 
 namespace vp_client.ViewModels
 {
-    public class InfoViewModel
+    [QueryProperty(nameof(Product), "product")]
+    public class InfoViewModel : INotifyPropertyChanged
     {
         #region Fields
         static HttpClient httpClient = new HttpClient();
-        private Product _product;
+        private Product _product;       
         public event PropertyChangedEventHandler PropertyChanged;
 
         private Command<object> addToBusketCommand;
-
-
-        //private INavigation navigation;
         #endregion
         #region Constructor
-        public InfoViewModel(Product product)
+        public InfoViewModel()
         {
-            Product = product;
             addToBusketCommand = new Command<object>(addProductToBusket);
             //backCommand = new Command<object>(toMainPage);
         }
@@ -52,7 +49,8 @@ namespace vp_client.ViewModels
             get { return _product; }
             set
             {
-                 _product = value;  
+                 _product = value;
+                NotifyPropertyChanged();
             }
         }   
 
@@ -62,6 +60,9 @@ namespace vp_client.ViewModels
             set { addToBusketCommand = value; }
         }
         #endregion
-
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

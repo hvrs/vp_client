@@ -4,10 +4,10 @@ namespace vp_client.Views;
 
 public partial class ProductInfo : ContentPage
 {
-	public ProductInfo(Product product)
+	public ProductInfo(/*Product product*/)
 	{
 		InitializeComponent();
-		BindingContext = new InfoViewModel(product);
+		BindingContext = new InfoViewModel(/*product*/);
 	}
 
     private void btn_back_Clicked(object sender, EventArgs e)

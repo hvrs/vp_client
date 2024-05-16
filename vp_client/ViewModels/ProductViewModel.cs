@@ -57,8 +57,10 @@ namespace vp_client.ViewModels
         }
         private async void toBusketPage(object obj)
         {
-            var newPage = new ProductBasket();
-            await Navigation.PushAsync(newPage);
+            await Shell.Current.GoToAsync("//Basket");
+
+            /*var newPage = new ProductBasket();
+            await Navigation.PushAsync(newPage);*/
         }
 
         private async void toInfoPage(object obj)//На страницу подробной информации о товаре
@@ -75,8 +77,17 @@ namespace vp_client.ViewModels
                     }),
                     Encoding.UTF8, "application/json");
                await httpClient.PostAsync("http://10.0.2.2:5125/api/View", jsonContent);
-               var newPage = new ProductInfo(obj as Product);
-               await Navigation.PushAsync(newPage);
+
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    {"product", (obj as Product) }
+                };
+
+               await Shell.Current.GoToAsync("//InfoProduct", parameters);
+
+
+              /* var newPage = new ProductInfo(obj as Product);
+               await Navigation.PushAsync(newPage);*/
             }
         }
 

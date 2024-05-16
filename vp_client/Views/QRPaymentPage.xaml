@@ -11,10 +11,10 @@
     </ContentPage.Resources>
     
     
-    <VerticalStackLayout>
+    <StackLayout>
         <Frame HasShadow="False" WidthRequest="400" HeightRequest="400" HorizontalOptions="Center" VerticalOptions="Center">
             <Image HeightRequest="400" WidthRequest="400" Source="{Binding ImageQR, Mode=OneWay, Converter={StaticResource ByteToImage}}"/>
         </Frame>
-        <Button Text="Оплачено"/>
-    </VerticalStackLayout>
+        <Button Text="Оплачено" Command="{Binding OkCommand}"/>
+    </StackLayout>
 </ContentPage>

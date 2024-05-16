@@ -7,9 +7,17 @@
     xmlns:locals="clr-namespace:vp_client.Views"
     Shell.FlyoutBehavior="Disabled">
 
+    
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate locals:ProductPage}"
         Route="MainPage" />
+    <ShellContent
+        ContentTemplate="{DataTemplate locals:ProductInfo}"
+        Route="InfoProduct"/>
+    <ShellContent ContentTemplate="{DataTemplate locals:ProductBasket}"
+                  Route="Basket"/>
+    <ShellContent ContentTemplate="{DataTemplate locals:QRPaymentPage}"
+                  Route="QR"/>
 
 </Shell>

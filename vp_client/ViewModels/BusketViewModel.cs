@@ -6,13 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using vp_client.Models;
 using vp_client.Views;
 
@@ -51,7 +47,7 @@ namespace vp_client.ViewModels
         {
             if (sum >0 && productsInBasket is not null)
             {
-                idProductsInBasketAndSum basketAndSum = new idProductsInBasketAndSum();
+                /*idProductsInBasketAndSum basketAndSum = new idProductsInBasketAndSum();
                 basketAndSum.Sum = sum;
                 foreach (var item in ProductsInBasket)
                 {
@@ -64,14 +60,18 @@ namespace vp_client.ViewModels
                 using StringContent Content = new(
                     JsonSerializer.Serialize(basketAndSum),
                     Encoding.UTF8, "application/json");
-                await httpClient.PutAsync("http://10.0.2.2:5125/api/Qr", Content);
+                await httpClient.PutAsync("http://10.0.2.2:5125/api/Qr", Content);*/
 
-                var response = await httpClient.GetStringAsync("http://10.0.2.2:5125/api/Qr");
+                ImageDto imageDto = new ImageDto();
+                imageDto = await httpClient.GetFromJsonAsync<ImageDto>($"http://10.0.2.2:5125/api/Qr/{sum}");
 
-                byte[] ImageQR = Convert.FromBase64String(response.Replace("\"", string.Empty));
-                var newPage = new QRPaymentPage();
-                newPage.BindingContext = ImageQR;
-                await Navigation.PushAsync(newPage); 
+
+                Dictionary<string, object> data = new Dictionary<string, object>
+                {
+                    {"QRImage", imageDto.image }
+                };
+
+                await Shell.Current.GoToAsync("//QR", data);
 
             }
         }
@@ -140,5 +140,9 @@ namespace vp_client.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+    public class ImageDto//класс для получения изображения QR-кода с сервера
+    {
+        public byte[]? image { get; set; }
     }
 }
