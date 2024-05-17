@@ -41,6 +41,10 @@ namespace vp_client.Models
             productQ = new List<ProductAndQuantity>();
         }
     }
+    public class IdTransaction
+    {
+        public int ID { get; set;}
+    }
     public class ProductAndQuantity
     {
         public int ProductID { get; set; }

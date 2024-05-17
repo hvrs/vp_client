@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="vp_client.Views.QRPaymentPage"
-             Title="QRPaymentPage">
+             Shell.NavBarIsVisible="False"
+             Title="">
     <ContentPage.Resources>
         <ResourceDictionary>
             <toolkit:ByteArrayToImageSourceConverter x:Key="ByteToImage"/>
@@ -11,10 +12,13 @@
     </ContentPage.Resources>
     
     
-    <StackLayout>
+    <StackLayout Spacing="20" VerticalOptions="Center">
         <Frame HasShadow="False" WidthRequest="400" HeightRequest="400" HorizontalOptions="Center" VerticalOptions="Center">
             <Image HeightRequest="400" WidthRequest="400" Source="{Binding ImageQR, Mode=OneWay, Converter={StaticResource ByteToImage}}"/>
         </Frame>
-        <Button Text="Оплачено" Command="{Binding OkCommand}"/>
+
+        <Button Text="Оплачено" WidthRequest="200" Command="{Binding OkCommand}"/>
+        <Button BackgroundColor="Red" WidthRequest="200" Text="Отмена покупки" Command="{Binding CancelCommand}"/>
+
     </StackLayout>
 </ContentPage>

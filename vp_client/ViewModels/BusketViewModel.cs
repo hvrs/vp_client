@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using vp_client.Models;
 using vp_client.Views;
 
@@ -47,7 +48,7 @@ namespace vp_client.ViewModels
         {
             if (sum >0 && productsInBasket is not null)
             {
-                /*idProductsInBasketAndSum basketAndSum = new idProductsInBasketAndSum();
+                idProductsInBasketAndSum basketAndSum = new idProductsInBasketAndSum();
                 basketAndSum.Sum = sum;
                 foreach (var item in ProductsInBasket)
                 {
@@ -60,15 +61,17 @@ namespace vp_client.ViewModels
                 using StringContent Content = new(
                     JsonSerializer.Serialize(basketAndSum),
                     Encoding.UTF8, "application/json");
-                await httpClient.PutAsync("http://10.0.2.2:5125/api/Qr", Content);*/
-
+                var responce = await httpClient.PutAsync("http://10.0.2.2:5125/api/Qr", Content);
+                string idTransaction = await responce.Content.ReadAsStringAsync();
+                int idt = Convert.ToInt32(idTransaction);
                 ImageDto imageDto = new ImageDto();
                 imageDto = await httpClient.GetFromJsonAsync<ImageDto>($"http://10.0.2.2:5125/api/Qr/{sum}");
 
 
                 Dictionary<string, object> data = new Dictionary<string, object>
                 {
-                    {"QRImage", imageDto.image }
+                    {"QRImage", imageDto.image },
+                    {"TransactionID", idt }
                 };
 
                 await Shell.Current.GoToAsync("//QR", data);
