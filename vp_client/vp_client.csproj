@@ -49,6 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\basket.svg" />
 	  <None Remove="Resources\Images\btn_back.svg" />
 	  <None Remove="Resources\Images\del_button.svg" />
 	</ItemGroup>

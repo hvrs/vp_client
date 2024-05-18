@@ -35,14 +35,26 @@ namespace vp_client.ViewModels
         private async void CancelPurchase(object obj)//Отмена покупки полностью
         {
             using StringContent Content = new(
-                   JsonSerializer.Serialize(transactionID),
+                   JsonSerializer.Serialize(new PurchaseStatus
+                   {
+                       transactionID = transactionID,
+                       isCompleted = false
+                   }),
                    Encoding.UTF8, "application/json");
             await httpClient.PostAsync("http://10.0.2.2:5125/api/Busket", Content);
         }
         
         private async void CompletedPurchase(object obj)
         {
-            await httpClient.DeleteAsync("http://10.0.2.2:5125/api/Busket");
+            using StringContent Content = new(
+                   JsonSerializer.Serialize(new PurchaseStatus
+                   {
+                       transactionID = transactionID,
+                       isCompleted = true
+                   }),
+                   Encoding.UTF8, "application/json");
+            await httpClient.PostAsync("http://10.0.2.2:5125/api/Busket", Content);
+
             await Shell.Current.GoToAsync("//MainPage");
         }
         #endregion
@@ -77,5 +89,10 @@ namespace vp_client.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+    public class PurchaseStatus
+    {
+        public int transactionID { get; set; }
+        public bool isCompleted { get; set; }
     }
 }
