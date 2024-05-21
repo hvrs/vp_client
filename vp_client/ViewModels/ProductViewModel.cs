@@ -49,18 +49,19 @@ namespace vp_client.ViewModels
                 using StringContent Content = new(
                     JsonSerializer.Serialize(new ProductToB
                     {
-                        ProductId = Convert.ToInt32(p.Id)
+                        ProductId = Convert.ToInt32(p.Id),
+                        isPlus = true
                     }),
-                    Encoding.UTF8, "application/json");
+                    Encoding.UTF8, "application/json"); ;
                 await httpClient.PutAsync("http://10.0.2.2:5125/api/Busket",Content);
             }
         }
         private async void toBusketPage(object obj)
         {
-            await Shell.Current.GoToAsync("//Basket");
+            //await Shell.Current.GoToAsync("//Basket");
 
-            /*var newPage = new ProductBasket();
-            await Navigation.PushAsync(newPage);*/
+            var newPage = new ProductBasket();
+            await Navigation.PushAsync(newPage);
         }
 
         private async void toInfoPage(object obj)//На страницу подробной информации о товаре

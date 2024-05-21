@@ -36,7 +36,8 @@ namespace vp_client.ViewModels
                 using StringContent Content = new(
                     JsonSerializer.Serialize(new ProductToB
                     {
-                        ProductId = Convert.ToInt32(_product.Id)
+                        ProductId = Convert.ToInt32(_product.Id),
+                        isPlus = true
                     }),
                     Encoding.UTF8, "application/json");
                 await httpClient.PutAsync("http://10.0.2.2:5125/api/Busket", Content);

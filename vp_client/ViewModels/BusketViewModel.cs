@@ -27,6 +27,8 @@ namespace vp_client.ViewModels
         private Command<object> changedQuantity;
         private Command<object> deleteProductCommand;
         private Command<object> makePurchaseCommand;
+        private Command<object> minusProductCommand;
+        private Command<object> plusProductCommand;
 
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
@@ -37,13 +39,55 @@ namespace vp_client.ViewModels
             productsFromHttp = httpClient.GetFromJsonAsync<ObservableCollection<DTOProductAndQuantity>>("http://10.0.2.2:5125/api/Busket").Result;
             deleteProductCommand = new Command<object>(DeleteProduct);
             makePurchaseCommand = new Command<object>(Purchase);
+            minusProductCommand = new Command<object>(ProductMinus);
+            plusProductCommand = new Command<object>(ProductPlus);
 
             ProductsInBasket = new ObservableCollection<DTOProductAndQuantity>(productsFromHttp);
             foreach (var i in ProductsInBasket)            
-                Sum += i.product.Cost * i.quantityInBusket;
+                Sum += i.product.Cost * i.QuantityInBusket;
 
 
         }
+        private async void ProductMinus(object product)
+        {
+            var foundItem = ProductsInBasket.FirstOrDefault(i => i.product.Id == (product as DTOProductAndQuantity).product.Id);
+            if (foundItem != null && foundItem.QuantityInBusket > 1)
+            {                
+                foundItem.QuantityInBusket--;
+                Sum -= (product as DTOProductAndQuantity).product.Cost;
+                using StringContent content = new(
+                    JsonSerializer.Serialize(new ProductToB
+                    {
+                        ProductId = foundItem.product.Id,
+                        isPlus = false
+                    }),
+                    Encoding.UTF8, "application/json");
+                await httpClient.PutAsync("http://10.0.2.2:5125/api/Busket", content);
+
+            }
+            else if (foundItem.QuantityInBusket ==1)
+            {
+                DeleteProduct(foundItem);
+            }                   
+        }
+        private async void ProductPlus(object product)
+        {
+            var foundItem = ProductsInBasket.FirstOrDefault(i=>i.product.Id == (product as DTOProductAndQuantity).product.Id);
+            if (foundItem != null && foundItem.QuantityInBusket <= foundItem.quantityInWarehouse)
+            {
+                foundItem.QuantityInBusket++;
+                Sum += (product as DTOProductAndQuantity).product.Cost;
+                using StringContent content = new(
+                    JsonSerializer.Serialize(new ProductToB
+                    {
+                        ProductId = foundItem.product.Id,
+                        isPlus = true
+                    }),
+                    Encoding.UTF8, "application/json");
+                await httpClient.PutAsync("http://10.0.2.2:5125/api/Busket", content);
+            }
+        }
+
         private async void Purchase(object obj)
         {
             if (sum >0 && productsInBasket is not null)
@@ -54,7 +98,7 @@ namespace vp_client.ViewModels
                 {
                     ProductAndQuantity _product = new ProductAndQuantity();
                     _product.ProductID = item.product.Id;
-                    _product.Quantity = item.quantityInBusket;
+                    _product.Quantity = item.QuantityInBusket;
 
                     basketAndSum.productQ.Add(_product);
                 }
@@ -81,7 +125,7 @@ namespace vp_client.ViewModels
 
         private async void DeleteProduct(object obj)
         {            
-            Sum -= (obj as DTOProductAndQuantity).product.Cost * (obj as DTOProductAndQuantity).quantityInBusket;
+            Sum -= (obj as DTOProductAndQuantity).product.Cost * (obj as DTOProductAndQuantity).QuantityInBusket;
             ProductsInBasket.Remove(obj as  DTOProductAndQuantity);
             await httpClient.DeleteAsync($"http://10.0.2.2:5125/api/Busket/{(obj as DTOProductAndQuantity).product.Id}");
 
@@ -101,6 +145,16 @@ namespace vp_client.ViewModels
                     NotifyPropertyChanged();
                 }
             }
+        }
+        public Command<object> PlusProductCommand
+        {
+            get { return plusProductCommand; }
+            set { plusProductCommand = value; }
+        }
+        public Command<object> MinusProductCommand
+        {
+            get { return minusProductCommand; }
+            set { minusProductCommand = value; }
         }
         public Command<object> MakePurchaseCommand
         {

@@ -44,8 +44,13 @@
                             </Grid>
                             <Grid Grid.Column="2">
                                 <StackLayout VerticalOptions="End">
-                                    <Label Text="{Binding quantityInBusket}" FontSize="17" HorizontalOptions="Center" TextColor="BlueViolet"/>
-                                    <Stepper Maximum="10"  HorizontalOptions="Center" Increment="1" Value="{Binding quantityInBusket}"/>
+                                    <Label Text="{Binding QuantityInBusket, StringFormat='Количество:{0:F0}'}" FontSize="17" HorizontalOptions="Center" TextColor="BlueViolet"/>
+                                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                                        <Button Text="min" Command="{Binding Path=BindingContext.MinusProductCommand, Source={x:Reference clv_basket}}" CommandParameter="{Binding}" 
+                                                WidthRequest="40" HeightRequest="40"/>
+                                        <Button Text="pl" Command="{Binding Path=BindingContext.PlusProductCommand, Source={x:Reference clv_basket}}" CommandParameter="{Binding}"
+                                                WidthRequest="40" HeightRequest="40"/>
+                                    </HorizontalStackLayout>
                                 </StackLayout>
                                 <ImageButton Source="del_button" VerticalOptions="Start" HorizontalOptions="End" WidthRequest="40" HeightRequest="40" Margin="0,10,10,0"
                                              Command="{Binding Path=BindingContext.DeleteProductCommand, Source={x:Reference clv_basket}}" CommandParameter="{Binding}"/>

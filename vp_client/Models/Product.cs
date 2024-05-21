@@ -1,6 +1,9 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,12 +24,29 @@ namespace vp_client.Models
     public class ProductToB
     {
         public int ProductId { get; set; }
+        public bool isPlus { get; set; }
     }
 
-    public class DTOProductAndQuantity//Объект продукта в корзине
+    public class DTOProductAndQuantity : INotifyPropertyChanged //Объект продукта в корзине 
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public Product product { get; set;}
-        public int quantityInBusket { get; set; }
+        public int quantityInWarehouse { get; set; }//Количество продукции на скалде
+
+        private int quantituInBusket { get; set; }
+        public int QuantityInBusket
+        {
+            get { return quantituInBusket; }
+            set { if(quantituInBusket != value)
+                     quantituInBusket = value; RaisePropertyChanged();
+                }
+        }
+
+        private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
 

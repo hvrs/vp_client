@@ -3,11 +3,14 @@ namespace vp_client.Views;
 
 public partial class ProductBasket : ContentPage
 {
-	public ProductBasket()
+    public BusketViewModel busketViewModel { get; set; }
+    public ProductBasket()
 	{
+        busketViewModel = new BusketViewModel();
 		InitializeComponent();
-		BindingContext = new BusketViewModel();
-	}
+        BindingContext = busketViewModel;
+
+    }
 
     private void btn_back_Clicked(object sender, EventArgs e)
     {
