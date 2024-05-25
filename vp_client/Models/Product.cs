@@ -13,12 +13,15 @@ namespace vp_client.Models
     {
         public int Id { get; set; }
         public string NameProduct { get; set; } = "";
+#nullable enable
         public byte[]? Photo { get; set; }
         public string Category { get; set; } = "";
         public string Manufacturer { get; set; } = "";
         public string? Nicotine { get; set; }
         public string? Strength { get; set; }
+#nullable disable
         public double Cost { get; set; }
+        public int QuantityInWarehouse { get; set; }
 
     }
     public class ProductToB

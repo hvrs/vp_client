@@ -21,7 +21,9 @@ namespace vp_client.ViewModels
         private INavigation navigation;
         private double sum;
         private ObservableCollection<DTOProductAndQuantity> productsInBasket;
-        private ObservableCollection<DTOProductAndQuantity> productsFromHttp;
+#nullable enable
+        private ObservableCollection<DTOProductAndQuantity>? productsFromHttp;
+#nullable disable
         HttpClient httpClient = new HttpClient();
 
         private Command<object> changedQuantity;
@@ -200,6 +202,8 @@ namespace vp_client.ViewModels
     }
     public class ImageDto//класс для получения изображения QR-кода с сервера
     {
+#nullable enable
         public byte[]? image { get; set; }
+#nullable disable
     }
 }
