@@ -23,9 +23,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Frame Grid.Column="0" HasShadow="False" CornerRadius="15" WidthRequest="400" HeightRequest="400" HorizontalOptions="Start" VerticalOptions="Center">
-                    <Image Grid.Column="0" HeightRequest="400" WidthRequest="400" Source="{Binding Product.Photo, Mode=OneWay, Converter={StaticResource ByteToImage}}"/>
-                </Frame>
+                <!--  <Frame Grid.Column="0" HasShadow="False" CornerRadius="15" WidthRequest="400" HeightRequest="400" HorizontalOptions="Start" VerticalOptions="Center"> -->
+                <Image Grid.Column="0" HeightRequest="400" WidthRequest="400" Source="{Binding Product.Photo, Mode=OneWay, Converter={StaticResource ByteToImage}}"/>
+               <!-- </Frame> -->
                 <StackLayout VerticalOptions="Center" Spacing="12" Grid.Column="1">
                     <Label Text="{Binding Product.NameProduct}" FontSize="25" HorizontalOptions="Start"/>
                     <Label Text="{Binding Product.Category}" FontSize="19" HorizontalOptions="Start"/>

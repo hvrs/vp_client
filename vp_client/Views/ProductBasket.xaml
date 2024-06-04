@@ -29,9 +29,10 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Frame Grid.Column="0" HasShadow="False" CornerRadius="15" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center">
-                                <Image Grid.Column="0" HeightRequest="200" WidthRequest="200" Margin="0,0,0,0" Source="{Binding product.Photo, Mode=OneWay, Converter={StaticResource ByteToImage}}"/>
-                            </Frame>
+                            <!--   <Frame Grid.Column="0" HasShadow="False" CornerRadius="15" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center"> -->
+                            <Image Grid.Column="0" HeightRequest="200" WidthRequest="200" Margin="0,0,0,0" Source="{Binding product.Photo, Mode=OneWay, Converter={StaticResource ByteToImage}}"/>
+                            <!-- </Frame> -->
+
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>

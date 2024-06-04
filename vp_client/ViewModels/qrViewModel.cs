@@ -42,7 +42,7 @@ namespace vp_client.ViewModels
                    }),
                    Encoding.UTF8, "application/json");
             await httpClient.PostAsync("http://10.0.2.2:5125/api/Busket", Content);
-            await Shell.Current.GoToAsync("//MainPage");
+            await Shell.Current.GoToAsync("//Basket");
         }
         
         private async void CompletedPurchase(object obj)
@@ -56,7 +56,7 @@ namespace vp_client.ViewModels
                    Encoding.UTF8, "application/json");
             await httpClient.PostAsync("http://10.0.2.2:5125/api/Busket", Content);
 
-            await Shell.Current.GoToAsync("//MainPage");
+            await Shell.Current.GoToAsync("//Basket");
         }
         #endregion
         #region Properties
